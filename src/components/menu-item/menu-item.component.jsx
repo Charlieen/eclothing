@@ -20,5 +20,9 @@ const MenuItem =({title,imageUrl,size,linkUrl,match,history})=>(
    
 
 )
-
+/**
+ * HOC: higher order component is just a  function that takes another component as an argument
+ * transform it into another component and returns that transformed component out of itself so we'll
+ * definitely explore that further;
+ */
 export default withRouter(MenuItem);
