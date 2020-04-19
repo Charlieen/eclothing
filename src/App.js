@@ -7,22 +7,20 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
+
+//Redux
+import {connect} from 'react-redux';
+import { setCurrentUser } from './redux/user/user.action';
 // some demo
 
 
 class App extends React.Component{
 
-  constructor(props){
-    super(props);
-    this.state={
-      currentUser:null
-    }
-
-  }
 
   unsubscribeFromAuth =null;
 
   componentDidMount(){
+    const{ setCurrentUser} = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(
 
       async userAuth =>{
@@ -30,16 +28,14 @@ class App extends React.Component{
         if(userAuth){
           const userRef = await createUserProfileDocument(userAuth);     
            userRef.onSnapshot(snapShot => {
-            this.setState({currentUser:{
+            setCurrentUser({
               id:snapShot.id,
               ...snapShot.data()
-            }});
+            });
           })
-        }else {
-          this.setState({currentUser: userAuth});
+        }else{
+          setCurrentUser(userAuth);
         }
-      
-        console.log(userAuth);
       },
       error =>{
         console.log(error);
@@ -50,7 +46,10 @@ class App extends React.Component{
   handleSignOut =()=> {
 
       auth.signOut()
-      .then(()=>{console.log('success log out')})
+      .then(()=>{
+        this.props.setCurrentUser(null);
+        console.log('success log out');
+      })
       .catch(e=>console.error(e));
 
   }
@@ -64,7 +63,7 @@ class App extends React.Component{
     //console.log(this.state.currentUser);
     return (
       <div>   
-      <Header currentUser={this.state.currentUser} handleSignOut={this.handleSignOut}/>
+      <Header handleSignOut={this.handleSignOut}/>
       <Switch>
       <Route exact  path='/' component={HomePage}/>
       <Route exact  path='/shop' component={ShopPage}/>
@@ -75,4 +74,10 @@ class App extends React.Component{
   }
 } 
 
-export default App;
+const mapStateToProps =(state) =>(
+  {
+  }
+)
+const mapActionToProps = {setCurrentUser}
+
+export default connect(mapStateToProps, mapActionToProps) (App);

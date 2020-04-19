@@ -13,11 +13,12 @@ class SignIn extends Component {
         }
     }
 
-    handleSubmit= (event)=>{
+    handleSubmit=  (event)=>{
         event.preventDefault();
         const {email,password} = this.state;
         auth.signInWithEmailAndPassword(email,password)
         .then(()=>{
+            this.setState({email:'',password:''});
             this.props.history.push('/');
         })
         .catch(e=>console.log(e));
