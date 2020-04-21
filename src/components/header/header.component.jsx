@@ -5,6 +5,8 @@ import {ReactComponent as Logo} from '../../asset/logo.svg';
 import { auth } from '../../firebase/firebase.util';
 import SignIn from '../sign-in/sign-in.component';
 import { connect} from 'react-redux';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropDown from '../cart/cart-dropdown/car-dropdown.component';
 
 //=({handleSignOut})
 
@@ -29,7 +31,9 @@ class  Header extends React.Component{
                 SIGN IN
                 </Link>
             )}
+            <CartIcon/>
         </div>
+        {this.props.shop.quickView && (<CartDropDown/>)}    
     </div>
         );
     }
@@ -38,7 +42,8 @@ class  Header extends React.Component{
     
 
 const mapStateToProps = state =>({
-    user:state.user
+    user:state.user,
+    shop:state.shop
 })
 
 const mapActionToProps ={}

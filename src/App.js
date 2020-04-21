@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-import {Route , Switch }from 'react-router-dom';
+import {Route , Switch, Redirect  }from 'react-router-dom';
 
 import HomePage from './pages/homepage/homepage.compoent';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
+import  CollectionShop  from './components/collection-shop/collection-shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 
@@ -24,7 +25,6 @@ class App extends React.Component{
     this.unsubscribeFromAuth = auth.onAuthStateChanged(
 
       async userAuth =>{
-        debugger;
         if(userAuth){
           const userRef = await createUserProfileDocument(userAuth);     
            userRef.onSnapshot(snapShot => {
@@ -67,17 +67,19 @@ class App extends React.Component{
       <Switch>
       <Route exact  path='/' component={HomePage}/>
       <Route exact  path='/shop' component={ShopPage}/>
-      <Route exact path='/signin' component={SignInAndSignUpPage}/>
+      <Route exact  path='/shop/:category' component={CollectionShop}/>
+      <Route exact path='/signin' 
+        render={()=> this.props.currentUser ? (<Redirect to='/'/>):(<SignInAndSignUpPage/>)}
+      />
       </Switch>
       </div>
     )
   }
 } 
 
-const mapStateToProps =(state) =>(
-  {
-  }
-)
+const mapStateToProps =({ user}) =>({
+  currentUser: user.currentUser})
+
 const mapActionToProps = {setCurrentUser}
 
 export default connect(mapStateToProps, mapActionToProps) (App);

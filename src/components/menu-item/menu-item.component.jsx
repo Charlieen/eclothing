@@ -1,6 +1,9 @@
 import React from 'react';
-import { withRouter }from 'react-router-dom';
+import { withRouter,Link }from 'react-router-dom';
 import './menu-item.style.scss';
+import { CollectionShop } from '../collection-shop/collection-shop.component';
+//
+
 
 const MenuItem =({title,imageUrl,size,linkUrl,match,history})=>(
     <div className={`${size} menu-item`} 
