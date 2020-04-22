@@ -15,8 +15,8 @@ class CollectionShop  extends React.Component {
                     <div className="collection-preview">
                     <h1>{title.toUpperCase()}</h1>
                     <div className="preview">
-                        {items.items.map(({id,...otherProps})=>
-                        (<CollectionItem key={id} {...otherProps} id={id} routeName={title} />))}
+                        {items.items.map((item)=>
+                        (<CollectionItem  item={item} />))}
                     </div>
                     </div>
                 );

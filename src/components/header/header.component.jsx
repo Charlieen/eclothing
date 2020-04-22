@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './header.style.scss';
 import {ReactComponent as Logo} from '../../asset/logo.svg';
-import { auth } from '../../firebase/firebase.util';
 import SignIn from '../sign-in/sign-in.component';
 import { connect} from 'react-redux';
 import CartIcon from '../cart-icon/cart-icon.component';
@@ -13,7 +12,7 @@ import CartDropDown from '../cart/cart-dropdown/car-dropdown.component';
 class  Header extends React.Component{
 
     render(){
-
+        const {currentUser,hidden} =this.props;
         return (
         <div className="header">
         <Link className="logo-container" to="/">
@@ -26,14 +25,14 @@ class  Header extends React.Component{
             <Link className="option" to="/contact">
             CONTACT
             </Link>
-            { this.props.user.currentUser !== null ?(<div className="option" onClick={this.props.handleSignOut}>SIGN OUT</div> ) :(
+            { currentUser !== null ?(<div className="option" onClick={this.props.handleSignOut}>SIGN OUT</div> ) :(
                 <Link className="option" to="/signin">
                 SIGN IN
                 </Link>
             )}
             <CartIcon/>
         </div>
-        {this.props.shop.quickView && (<CartDropDown/>)}    
+        {hidden && (<CartDropDown/>)}    
     </div>
         );
     }
@@ -41,9 +40,9 @@ class  Header extends React.Component{
 
     
 
-const mapStateToProps = state =>({
-    user:state.user,
-    shop:state.shop
+const mapStateToProps = ({user:{currentUser}, cart:{hidden}}) =>({
+    currentUser,
+    hidden
 })
 
 const mapActionToProps ={}

@@ -1,38 +1,18 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import { ReactComponent as ShoppingIcon} from '../../asset/cart.svg';
 import './cart-icon.style.scss';
 import {connect} from 'react-redux';
-import { getQuickView} from '../../redux/shop/shop.actions';
+import { toggleCartHidden } from '../../redux/cart/cart.actions'
 
+const CartIcon =({toggleCartHidden})=>(
+    <div className="cart-icon" onClick={toggleCartHidden}>
+    <ShoppingIcon className="shopping-icon"/>
+    <span className="item-count">0</span>
+    </div>
+)
 
-import { getAllItems }from '../../redux/shop/shop.actions';
-
-class CartIcon extends React.Component{
-
-
-
-    componentDidMount(){
-        this.props.getAllItems();
-    }
-
-    getQuickView = ()=>{
-        this.props.getQuickView();
-    }    
-  
-
-            
-    render(){
-        return (
-            <div className="cart-icon" onClick={this.getQuickView}>
-            <ShoppingIcon className="shopping-icon"/>
-            <span className="item-count">{this.props.shop.cItemsCount}</span>
-        </div>
-        )
-    }
-}
-const mapStateToProps = state =>({
-    shop:state.shop
+const mapDispatchToProps = dispatch => ({
+    toggleCartHidden: ()=> dispatch(toggleCartHidden())
 })
 
-export default connect(mapStateToProps,{getAllItems,getQuickView})(CartIcon);
+export default connect(null,mapDispatchToProps)(CartIcon);
