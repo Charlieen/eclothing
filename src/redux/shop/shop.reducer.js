@@ -29,10 +29,29 @@ const _updateShopItems = (shopItems,action)=>{
    return {...categroy,items:items};
 }
 
+const _updateCartItems = (cartItems,item)=>{
+    debugger;
+    let result;
+    const exist = cartItems.filter(i => i.id === item.id).length === 1;
+
+    if(exist){
+        result = cartItems.map(i =>{
+            if(i.id === item.id) {
+                return {...i,count:i.count+1}
+            }else return i;
+        });
+    }else {
+        result = [...cartItems,{...item,count:1,inCart:true}];
+    }
+
+    return result;
+}
+
  const shopReducer = (state = initialShop , action) => {
     switch (action.type) {
         case ShopActionsDIC.INT_SHOP_ITEMS:
             return state;
+
         case ShopActionsDIC.GET_QUICK_VIEW:
             return {...state,
                 quickView: ! state.quickView
@@ -47,7 +66,7 @@ const _updateShopItems = (shopItems,action)=>{
                 }else return categroy
 
             }),
-            cartItems:[...state.cartItems,{...action.payload,count:1,inCart:true}],
+            cartItems:_updateCartItems(state.cartItems,action.payload),
             cItemsCount:state.cItemsCount +1,
             cTotalPrice: state.cTotalPrice + action.payload.price
         }

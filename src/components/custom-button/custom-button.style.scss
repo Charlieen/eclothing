@@ -13,6 +13,8 @@
     font-weight: bolder;
     border: none;
     cursor: pointer;
+    display:flex;
+    justify-content: center;
 
     &.google{
       background-color:#4285f4;
@@ -23,11 +25,25 @@
         border:none;
       }
     }
+
+    &.invented {
+      background-color:white;
+      color:black;
+      border: 1px solid black;
+
+      &:hover{
+        background-color:black;
+        color:white;
+        border:none;
+      }
+    }
   
     &:hover {
       background-color: white;
       color: black;
       border: 1px solid black;
     }
+
+
   }
   
