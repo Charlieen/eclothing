@@ -6,6 +6,9 @@ import SignIn from '../sign-in/sign-in.component';
 import { connect} from 'react-redux';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropDown from '../cart/cart-dropdown/car-dropdown.component';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser }from '../../redux/user/user.selectors';
+import { selectCartHidden }from '../../redux/cart/cart.selector';
 
 //=({handleSignOut})
 
@@ -32,7 +35,7 @@ class  Header extends React.Component{
             )}
             <CartIcon/>
         </div>
-        {hidden && (<CartDropDown/>)}    
+        {!hidden && (<CartDropDown/>)}    
     </div>
         );
     }
@@ -40,9 +43,9 @@ class  Header extends React.Component{
 
     
 
-const mapStateToProps = ({user:{currentUser}, cart:{hidden}}) =>({
-    currentUser,
-    hidden
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
 })
 
 const mapActionToProps ={}
