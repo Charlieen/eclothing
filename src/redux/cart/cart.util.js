@@ -8,6 +8,24 @@ export const  addItemToCart = (cartItems,cartItemToAdd) => {
     }
 }
 
+export const increaseCount = (cartItems, item) => {
+    return cartItems.map(cartItem => 
+        cartItem.id === item.id ? {...cartItem,count:cartItem.count+1}: cartItem)
+
+}
+
+export const decreaseCount = (cartItems, item) =>{
+    return cartItems.map(cartItem => 
+        cartItem.id === item.id ? {...cartItem,count:
+            (cartItem.count- 1)>=0 ? cartItem.count- 1 : 0 }: cartItem)
+}
+
+export const removeItem = (cartItems,item) => {
+    const result = cartItems.filter(i=> i.id !==  item.id);
+    console.log(result);
+    return result;
+}
+
 export const _addItem_groupWay = (item,state) =>{
     debugger;
     const itemExist = state.cartItems.find(i =>i.id === item.id);

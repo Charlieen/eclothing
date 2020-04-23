@@ -21,6 +21,18 @@
     .price {
       width: 23%;
     }
+    .increase{
+        padding-left:10px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .decrease{
+        padding-right: 10px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
   
     .quantity {
       padding-left: 20px;
