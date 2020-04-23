@@ -19,7 +19,7 @@ import './cart-dropdown.style.scss';
         return (
             <div className="cart-dropdown">
             <div className="cart-items">
-                {cartItems.length >0 ? cartItems.map(item=> <CartItem item={item}/>):
+                {cartItems.length >0 ? cartItems.map(item=> <CartItem key={item.id} item={item}/>):
                 (<span className="empty-message">Your cart is empty</span>)
             }
           
