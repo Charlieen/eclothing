@@ -23,4 +23,8 @@ const CheckoutItem = ({increaseCount,decreaseCount,removeItem,item})=>{
     </div>
 )}
 
+const mapDispatchToProps = dispatch =>({
+    clearItem: item => dispatch(removeItem(item))
+})
+
 export default connect(null,{increaseCount,decreaseCount,removeItem}) (CheckoutItem);

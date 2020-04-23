@@ -17,7 +17,7 @@ export const increaseCount = (cartItems, item) => {
 export const decreaseCount = (cartItems, item) =>{
     return cartItems.map(cartItem => 
         cartItem.id === item.id ? {...cartItem,count:
-            (cartItem.count- 1)>=0 ? cartItem.count- 1 : 0 }: cartItem)
+            (cartItem.count- 1)>=0 ? cartItem.count- 1 : 0 }: cartItem).filter(item =>item.count >0)
 }
 
 export const removeItem = (cartItems,item) => {
