@@ -1,14 +1,9 @@
 import { ShopActionsDIC } from './shop.types';
-import SHOP_DATA  from '../../data/shop.data';
+import SHOP_DATA  from '../../data/shop.data.normalization';
 
 const initialShop ={
     shopItems:SHOP_DATA,
-    routeName:'',
-    quickView:false,
-    cartItems:[],
-    cCurrentItem:null,
-    cItemsCount:0,
-    cTotalPrice:0
+
 }
 const _updateShopItems = (shopItems,action)=>{
 
