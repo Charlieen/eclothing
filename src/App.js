@@ -4,9 +4,11 @@ import {Route , Switch, Redirect  }from 'react-router-dom';
 
 import HomePage from './pages/homepage/homepage.compoent';
 import ShopPage from './pages/shop/shop.component';
+import CollectionPage from './pages/collection/collection.component'
 import Header from './components/header/header.component';
 import CheckOutPage from './pages/checkout/checkout.component';
 import  CollectionShop  from './components/collection-shop/collection-shop.component';
+import CollectionOverview from './components/collection-overview/collection-overview.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 
@@ -64,13 +66,14 @@ class App extends React.Component{
 
   render(){
     //console.log(this.state.currentUser);
+    //      <Route exact  path='/shop/:category' component={CollectionShop}/> 
     return (
       <div>   
       <Header handleSignOut={this.handleSignOut}/>
       <Switch>
       <Route exact  path='/' component={HomePage}/>
       <Route exact  path='/shop' component={ShopPage}/>
-      <Route exact  path='/shop/:category' component={CollectionShop}/>
+      <Route exact  path='/shop/:categoryId' component={CollectionPage}/>
       <Route exact path='/signin' 
         render={()=> this.props.currentUser ? (<Redirect to='/'/>):(<SignInAndSignUpPage/>)}
       />

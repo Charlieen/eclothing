@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import CollectionPreview from '../../components/collection-preview/collection-preview';
 import { connect} from 'react-redux';
-import { initialShopItem} from '../../redux/shop/shop.actions';
+import { Route ,Switch }from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { selectedShopItems }from '../../redux/shop/shop.selector';
+import CollectionOverview from '../../components/collection-overview/collection-overview.component';
+import CollectionPage from '../collection/collection.component';
+
+//          
+ const ShopPage = ({match}) => {
+        
+    return ( <div className="shop-page">
+             <Route exact path={`${match.path}`} component={CollectionOverview}/> 
+               <Route   path={`${match.path}/:categoryId`} component={CollectionPage}/>
+    </div>
+    )
+ }
  
- class ShopPage extends Component {
+ 
 
-    componentDidMount(){
-        this.props.initialShopItem();
-    }
 
-    render() {
-        console.log('props',this.props);
-        return (
-            this.props.collections? (
-                <div>
-                {this.props.collections.map(({id, ...otherProps}) => (<CollectionPreview key={id} {...otherProps}/>))}
-              </div>
-            ):(<div>loading...</div>)
-           
-        )
-    }
-}
 
-const mapStateToProps =(state)=>({
-    collections:state.shop.shopItems
-})
 
-export default connect(mapStateToProps,{initialShopItem})(ShopPage);
+export default ShopPage;
 
 
