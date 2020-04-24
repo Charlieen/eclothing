@@ -1,10 +1,10 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/auth';
-import {config} from '../api/firebase';
+//import {config} from '../api/firebase';
 
 
-
+const config={};
 firebase.initializeApp(config);
 
 export const createUserProfileDocument = async (userAuth,additionalData) => {
