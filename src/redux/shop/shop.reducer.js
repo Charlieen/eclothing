@@ -2,7 +2,8 @@ import { ShopActionsDIC } from './shop.types';
 import SHOP_DATA  from '../../data/shop.data.normalization';
 
 const initialShop ={
-    shopItems:SHOP_DATA,
+    shopItems:null,
+    isLoading:true
 
 }
 const _updateShopItems = (shopItems,action)=>{
@@ -45,7 +46,7 @@ const _updateCartItems = (cartItems,item)=>{
  const shopReducer = (state = initialShop , action) => {
     switch (action.type) {
         case ShopActionsDIC.INT_SHOP_ITEMS:
-            return state;
+            return {...state,shopItems:action.payload,isLoading:false};
 
         case ShopActionsDIC.GET_QUICK_VIEW:
             return {...state,

@@ -8,7 +8,7 @@ import CollectionPreview from '../../components/collection-preview/collection-pr
 const CollectionOverview =({shopItems,match})=>{
     // const routeName = match.params.category;
     // const category= shopItems.find(c =>c.routeName === routeName);
-    console.log(shopItems);
+  //  console.log(shopItems);
     return(
     <div className="collection-overview">
         { shopItems.map( ({id, ...otherProps}) => (<CollectionPreview key={id} {...otherProps}/>))}

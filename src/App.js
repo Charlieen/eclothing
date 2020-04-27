@@ -10,13 +10,16 @@ import CheckOutPage from './pages/checkout/checkout.component';
 import  CollectionShop  from './components/collection-shop/collection-shop.component';
 import CollectionOverview from './components/collection-overview/collection-overview.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.util';
+import  firebase,{ auth, createUserProfileDocument ,addCollectionAndDocuments,convertCollectionsSnapshotToMap } from './firebase/firebase.util';
 
 //Redux
 import {connect} from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector} from 'reselect';
+import { selectedShopItemsForArray ,selectedShopItemsIsLoading }from './redux/shop/shop.selector';
+import WithSpinner from './components/with-spinner/with-spinner.component';
+import {initialShopItem }from './redux/shop/shop.actions';
 // some demo
 
 
@@ -24,9 +27,25 @@ class App extends React.Component{
 
 
   unsubscribeFromAuth =null;
+  //unsubscribeCollectionSnapshot=null;
+
+  changeArrayToObject=(shopItems)=> {
+     
+    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
+
+    const test2 = shopItems.reduce((acc,collection)=> {
+       acc[collection.title.toLowerCase()]= collection;
+       return acc;
+    },{})
+
+    console.log(test);
+    return test;
+ }
+
 
   componentDidMount(){
-    const{ setCurrentUser} = this.props;
+    const{ shopItemsArray,setCurrentUser} = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(
 
       async userAuth =>{
@@ -40,12 +59,26 @@ class App extends React.Component{
           })
         }else{
           setCurrentUser(userAuth);
+        //  addCollectionAndDocuments('collections',shopItemsArray.map(({title,items})=>({title,items})));
         }
       },
       error =>{
         console.log(error);
       }
-    )    
+    );
+    
+  //   const collcectionRef = firebase.firestore().collection('collections');
+
+  //   this.unsubscribeCollectionSnapshot = collcectionRef.onSnapshot(async snapshot => {
+  //   // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
+  //    const result = await convertCollectionsSnapshotToMap(snapshot);
+  //      console.log(result);
+  //      const resultObject = this.changeArrayToObject(result);
+
+  //     this.props.initialShopItem(resultObject);
+
+  //  }  );
+
   }
 
   handleSignOut =()=> {
@@ -61,12 +94,15 @@ class App extends React.Component{
 
   componentWillUnmount(){
     this.unsubscribeFromAuth();
+  //  this.unsubscribeCollectionSnapshot();
   }
 
 
   render(){
     //console.log(this.state.currentUser);
     //      <Route exact  path='/shop/:category' component={CollectionShop}/> 
+    // const WithSpinnerCollectionPage = WithSpinner(CollectionPage);
+
     return (
       <div>   
       <Header handleSignOut={this.handleSignOut}/>
@@ -85,10 +121,13 @@ class App extends React.Component{
 } 
 
 const mapStateToProps = createStructuredSelector({
-  currentUser:selectCurrentUser
+  currentUser:selectCurrentUser,
+  shopItemsArray:selectedShopItemsForArray,
+  isLoading: selectedShopItemsIsLoading
+
 })
 
 
-const mapActionToProps = {setCurrentUser}
+const mapActionToProps = {setCurrentUser ,initialShopItem}
 
 export default connect(mapStateToProps, mapActionToProps) (App);

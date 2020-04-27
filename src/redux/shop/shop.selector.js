@@ -18,17 +18,21 @@ export const selectedShopItems = createSelector(
 )
 
 const _mapObjectToArray = (shopItems) => {
-    debugger;
+   // debugger;
     let result =[];
     const keys = Object.keys(shopItems);
-    keys.forEach(key=> {console.log(shopItems[key])});
+   // keys.forEach(key=> {console.log(shopItems[key])});
         keys.forEach(key => result.push(shopItems[key]));
         return result;
 }
+export const selectedShopItemsIsLoading = createSelector(
+    [selectShopItems],
+    shop => shop.isLoading
+)
 
 export const selectedShopItemsForArray = createSelector(
     [selectShopItems],
-     shop => _mapObjectToArray(shop.shopItems)
+     shop => shop.shopItems ? _mapObjectToArray(shop.shopItems):[]
 )
 
 
@@ -42,7 +46,7 @@ export const selectedCollection = collectionUrlParam =>
 createSelector(
     [selectShopItems],
     collections => {
-        console.log(collections);
-      return   collections.shopItems[collectionUrlParam]
+     //   console.log(collections);
+      return  collections.shopItems? collections.shopItems[collectionUrlParam]:{};
     }
 )

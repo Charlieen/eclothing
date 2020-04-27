@@ -21,7 +21,7 @@ const TopicsList= ()=>(
 export default class RouterDemo extends Component {
 
     render() {
-        console.log(this.props);
+     //   console.log(this.props);
         return (
             <div>
             <Link to='/demopage'>link1</Link>

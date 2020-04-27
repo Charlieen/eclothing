@@ -22,7 +22,7 @@ export const decreaseCount = (cartItems, item) =>{
 
 export const removeItem = (cartItems,item) => {
     const result = cartItems.filter(i=> i.id !==  item.id);
-    console.log(result);
+  //  console.log(result);
     return result;
 }
 

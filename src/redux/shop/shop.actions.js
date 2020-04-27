@@ -1,7 +1,8 @@
 import { ShopActionsDIC }from './shop.types';
 
-export const initialShopItem = ()=>({
-    type:ShopActionsDIC.INT_SHOP_ITEMS
+export const initialShopItem = (items)=>({
+    type:ShopActionsDIC.INT_SHOP_ITEMS,
+    payload:items
 })
 
 export const addItemToCart = item => ({
