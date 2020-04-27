@@ -33,7 +33,9 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
    componentDidMount(){
 
       const collcectionRef = firebase.firestore().collection('collections');
+      // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
 
+      //: 1 firebase api onSnapshot:
        this.unsubscribeCollectionSnapshot =collcectionRef.onSnapshot(async snapshot => {
        // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
        const result = convertCollectionsSnapshotToMap(snapshot);
@@ -43,6 +45,16 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
         this.props.initialShopItem(resultObject);
         this.setState({loading:false});
       });
+
+      //: 2 firebase api promise version:
+
+      // collcectionRef.get().then(snapshot=>{
+
+      // })
+      //: 3 RESTful api  by fetch
+
+     
+
 
    }
    componentWillUnmount(){
