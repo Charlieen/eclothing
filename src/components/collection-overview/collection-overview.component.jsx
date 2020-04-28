@@ -9,6 +9,7 @@ const CollectionOverview =({shopItems,match})=>{
     // const routeName = match.params.category;
     // const category= shopItems.find(c =>c.routeName === routeName);
   //  console.log(shopItems);
+  console.log(match);
     return(
     <div className="collection-overview">
         { shopItems.map( ({id, ...otherProps}) => (<CollectionPreview key={id} {...otherProps}/>))}

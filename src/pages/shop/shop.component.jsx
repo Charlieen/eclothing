@@ -5,46 +5,49 @@ import { Route ,Switch }from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectedShopItems }from '../../redux/shop/shop.selector';
 import CollectionOverview from '../../components/collection-overview/collection-overview.component';
+import CollectionOverviewContainer from '../../components/collection-overview/collection-overview.container';
 import CollectionPage from '../collection/collection.component';
-import  firebase,{convertCollectionsSnapshotToMap} from '../../firebase/firebase.util';
-import {initialShopItem}from '../../redux/shop/shop.actions';
+
+import { fetchCollections }from '../../redux/shop/shop.actions';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
 //          
  class ShopPage extends React.Component{
 
-   state={loading:true}
+   //state={loading:true}
      
-   unsubscribeCollectionSnapshot=null;
+   // unsubscribeCollectionSnapshot=null;
 
-   changeArrayToObject=(shopItems)=> {
+   // changeArrayToObject=(shopItems)=> {
      
-      const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
+   //    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
 
-      const test2 = shopItems.reduce((acc,collection)=> {
-         acc[collection.title.toLowerCase()]= collection;
-         return acc;
-      },{})
+   //    const test2 = shopItems.reduce((acc,collection)=> {
+   //       acc[collection.title.toLowerCase()]= collection;
+   //       return acc;
+   //    },{})
 
-      console.log(test);
-      return test;
-   }
+   //    console.log(test);
+   //    return test;
+   // }
 
    componentDidMount(){
 
-      const collcectionRef = firebase.firestore().collection('collections');
-      // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
+      this.props.fetchCollections();
 
-      //: 1 firebase api onSnapshot:
-       this.unsubscribeCollectionSnapshot =collcectionRef.onSnapshot(async snapshot => {
-       // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
-       const result = convertCollectionsSnapshotToMap(snapshot);
-          console.log(result);
-          const resultObject = this.changeArrayToObject(result);
+      // const collcectionRef = firebase.firestore().collection('collections');
+      // // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
 
-        this.props.initialShopItem(resultObject);
-        this.setState({loading:false});
-      });
+      // //: 1 firebase api onSnapshot:
+      //  this.unsubscribeCollectionSnapshot =collcectionRef.onSnapshot(async snapshot => {
+      //  // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
+      //  const result = convertCollectionsSnapshotToMap(snapshot);
+      //     console.log(result);
+      //     const resultObject = this.changeArrayToObject(result);
+
+      //   this.props.initialShopItem(resultObject);
+      //   this.setState({loading:false});
+      // });
 
       //: 2 firebase api promise version:
 
@@ -57,23 +60,25 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
 
    }
-   componentWillUnmount(){
-      this.unsubscribeCollectionSnapshot();
-   }
+   // componentWillUnmount(){
+   //  //  this.unsubscribeCollectionSnapshot();
+   // }
 
   
    
     render() {
 
       const {match} = this.props;
-      const {loading} = this.state;
+      // const { isLoading } = this.props.shop;
 
-      const WithSpinnerCollecitonOverview = WithSpinner(CollectionOverview);
+      // const WithSpinnerCollecitonOverview = WithSpinner(CollectionOverview);
+
+      // <Route exact path={`${match.path}`} 
+      // render={(props)=> <WithSpinnerCollecitonOverview isLoading={isLoading} {...props}/> }/> 
 
       return ( <div className="shop-page">
                <Route exact path={`${match.path}`} 
-               render={(props)=> <WithSpinnerCollecitonOverview isLoading={loading} {...props}/> }/> 
-               <Route   path={`${match.path}/:categoryId`} component={CollectionPage}/>
+               component={CollectionOverviewContainer}/> 
                </div>
             )
     }
@@ -81,12 +86,11 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
  }
     
 
+
  
- 
 
 
 
-
-export default connect(null,{initialShopItem}) (ShopPage);
+export default connect(null,{fetchCollections}) (ShopPage);
 
 

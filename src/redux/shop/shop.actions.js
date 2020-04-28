@@ -1,18 +1,67 @@
 import { ShopActionsDIC }from './shop.types';
+import firebase,{firestore,convertCollectionsSnapshotToMap} from '../../firebase/firebase.util';
 
-export const initialShopItem = (items)=>({
-    type:ShopActionsDIC.INT_SHOP_ITEMS,
-    payload:items
+ const startFetchCollections = () =>({
+    type:ShopActionsDIC.FETCH_COLLECTIONS_START
+
+})
+ const fetchCollectionsSuccess = (collections) =>({
+    type:ShopActionsDIC.FETCH_COLLECTIONS_SUCCESS,
+    payload:collections
+})
+ const fetchCollectionsFailure = (message) =>({
+    type:ShopActionsDIC.FETCH_COLLECTIONS_FAILURE,
+    payload:message
 })
 
-export const addItemToCart = item => ({
-    type:ShopActionsDIC.ADD_ITEM_TO_CART,
-    payload:item
-})
 
-export const getAllItems = ()=>({
-    type:ShopActionsDIC.GET_ALL_ITEMS
-})
-export const getQuickView = ()=>({
-    type:ShopActionsDIC.GET_QUICK_VIEW
-})
+const changeArrayToObject=(shopItems)=> {
+     
+    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
+
+    const test2 = shopItems.reduce((acc,collection)=> {
+       acc[collection.title.toLowerCase()]= collection;
+       return acc;
+    },{})
+
+    console.log(test);
+    return test;
+ }
+
+
+export const fetchCollections = () => dispatch => {
+        console.log('fetchCollection is running...');
+        dispatch(startFetchCollections());
+
+        const collcectionRef = firebase.firestore().collection('collections');
+   
+        collcectionRef.onSnapshot ( async snapshot => {
+
+          const result = convertCollectionsSnapshotToMap(snapshot);
+          const resultObject = changeArrayToObject(result);
+          dispatch(fetchCollectionsSuccess(resultObject));
+        },
+        onError =>{
+            console.log(onError.message);
+            dispatch(fetchCollectionsFailure(onError.message));
+        }
+    );
+}
+
+export const fetchCollectionsStartAsync = () => {
+    return dispatch => {
+        const collectionRef =firebase.firestore().collection('collections');
+        dispatch(startFetchCollections());
+
+        collectionRef.get()
+        .then(snapshot=> {
+            const result = convertCollectionsSnapshotToMap(snapshot);
+            const resultObject = changeArrayToObject(result);
+            dispatch(fetchCollectionsSuccess(resultObject));
+        })
+        .catch(error=> dispatch(fetchCollectionsFailure(error.message)));
+    }
+}
+
+
+

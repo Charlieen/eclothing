@@ -17,9 +17,11 @@ import {connect} from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector} from 'reselect';
-import { selectedShopItemsForArray ,selectedShopItemsIsLoading }from './redux/shop/shop.selector';
+import { selectedShopItemsForArray ,selectedShopItemsIsLoading, selectIsCollectionLoaded }from './redux/shop/shop.selector';
 import WithSpinner from './components/with-spinner/with-spinner.component';
-import {initialShopItem }from './redux/shop/shop.actions';
+import { fetchCollections ,fetchCollectionsStartAsync } from './redux/shop/shop.actions';
+import CollectionPageContainer from './pages/collection/collection.container';
+
 // some demo
 
 
@@ -29,18 +31,7 @@ class App extends React.Component{
   unsubscribeFromAuth =null;
   //unsubscribeCollectionSnapshot=null;
 
-  changeArrayToObject=(shopItems)=> {
-     
-    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
 
-    const test2 = shopItems.reduce((acc,collection)=> {
-       acc[collection.title.toLowerCase()]= collection;
-       return acc;
-    },{})
-
-    console.log(test);
-    return test;
- }
 
 
   componentDidMount(){
@@ -78,6 +69,8 @@ class App extends React.Component{
   //     this.props.initialShopItem(resultObject);
 
   //  }  );
+      this.props.fetchCollections();
+  //this.props.fetchCollectionsStartAsync();
 
   }
 
@@ -97,21 +90,34 @@ class App extends React.Component{
   //  this.unsubscribeCollectionSnapshot();
   }
 
-
+  //<WithSpinnerCollectionPage isLoading={!collectionIsLoad} otherProps={props} />
   render(){
     //console.log(this.state.currentUser);
     //      <Route exact  path='/shop/:category' component={CollectionShop}/> 
     // const WithSpinnerCollectionPage = WithSpinner(CollectionPage);
+    const WithSpinnerCollectionPage = WithSpinner(CollectionPage);
 
+
+
+      const {isLoading,currentUser,collectionIsLoad} = this.props;
     return (
       <div>   
       <Header handleSignOut={this.handleSignOut}/>
       <Switch>
       <Route exact  path='/' component={HomePage}/>
       <Route exact  path='/shop' component={ShopPage}/>
-      <Route exact  path='/shop/:categoryId' component={CollectionPage}/>
+     
+      <Route exact  path='/shop/:categoryId' 
+      render = { (props)=> {
+        console.log('props:  ',props);
+      
+        return  <CollectionPageContainer otherProps={props} />
+       }}/>
+
+
+
       <Route exact path='/signin' 
-        render={()=> this.props.currentUser ? (<Redirect to='/'/>):(<SignInAndSignUpPage/>)}
+        render={()=> currentUser ? (<Redirect to='/'/>):(<SignInAndSignUpPage/>)}
       />
       <Route exact  path='/checkout' component={CheckOutPage}/>
       </Switch>
@@ -122,12 +128,11 @@ class App extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
   currentUser:selectCurrentUser,
-  shopItemsArray:selectedShopItemsForArray,
-  isLoading: selectedShopItemsIsLoading
-
+ // isLoading:selectedShopItemsIsLoading,
+  collectionIsLoad:selectIsCollectionLoaded
 })
 
 
-const mapActionToProps = {setCurrentUser ,initialShopItem}
+const mapActionToProps = {setCurrentUser ,fetchCollections ,fetchCollectionsStartAsync }
 
 export default connect(mapStateToProps, mapActionToProps) (App);

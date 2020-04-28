@@ -2,13 +2,13 @@ import { createSelector } from 'reselect';
 /**
  * Data normalization is that all it is what you store lists of elements as object instead of arrays
  */
-const COLLECTION_ID_MAP ={
-    hats:1,
-    sneakers:2,
-    jackets:3,
-    womens:4,
-    mens:5
-}
+// const COLLECTION_ID_MAP ={
+//     hats:1,
+//     sneakers:2,
+//     jackets:3,
+//     womens:4,
+//     mens:5
+// }
 
 const selectShopItems = state => state.shop;
 
@@ -49,4 +49,10 @@ createSelector(
      //   console.log(collections);
       return  collections.shopItems? collections.shopItems[collectionUrlParam]:{};
     }
+)
+
+export const selectIsCollectionLoaded = createSelector(
+   [selectShopItems],
+    shop => !!shop.shopItems
+
 )
