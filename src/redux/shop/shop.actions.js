@@ -1,15 +1,15 @@
 import { ShopActionsDIC }from './shop.types';
 import firebase,{firestore,convertCollectionsSnapshotToMap} from '../../firebase/firebase.util';
 
- const startFetchCollections = () =>({
+ export const fetchCollectionsStart = () =>({
     type:ShopActionsDIC.FETCH_COLLECTIONS_START
 
 })
- const fetchCollectionsSuccess = (collections) =>({
+ export const fetchCollectionsSuccess = (collections) =>({
     type:ShopActionsDIC.FETCH_COLLECTIONS_SUCCESS,
     payload:collections
 })
- const fetchCollectionsFailure = (message) =>({
+export  const fetchCollectionsFailure = (message) =>({
     type:ShopActionsDIC.FETCH_COLLECTIONS_FAILURE,
     payload:message
 })
@@ -31,7 +31,7 @@ const changeArrayToObject=(shopItems)=> {
 
 export const fetchCollections = () => dispatch => {
         console.log('fetchCollection is running...');
-        dispatch(startFetchCollections());
+        dispatch(fetchCollectionsStart());
 
         const collcectionRef = firebase.firestore().collection('collections');
    
@@ -51,7 +51,7 @@ export const fetchCollections = () => dispatch => {
 export const fetchCollectionsStartAsync = () => {
     return dispatch => {
         const collectionRef =firebase.firestore().collection('collections');
-        dispatch(startFetchCollections());
+        dispatch(fetchCollectionsStart());
 
         collectionRef.get()
         .then(snapshot=> {

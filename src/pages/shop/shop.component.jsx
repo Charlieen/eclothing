@@ -8,7 +8,7 @@ import CollectionOverview from '../../components/collection-overview/collection-
 import CollectionOverviewContainer from '../../components/collection-overview/collection-overview.container';
 import CollectionPage from '../collection/collection.component';
 
-import { fetchCollections }from '../../redux/shop/shop.actions';
+import {fetchCollectionsStart }from '../../redux/shop/shop.actions';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
 //          
@@ -33,7 +33,7 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
    componentDidMount(){
 
-      this.props.fetchCollections();
+      this.props.fetchCollectionsStart();
 
       // const collcectionRef = firebase.firestore().collection('collections');
       // // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
@@ -91,6 +91,6 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
 
 
-export default connect(null,{fetchCollections}) (ShopPage);
+export default connect(null,{fetchCollectionsStart}) (ShopPage);
 
 

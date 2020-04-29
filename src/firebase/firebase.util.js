@@ -40,6 +40,19 @@ export const createUserProfileDocument = async (userAuth,additionalData) => {
     return userRef;
 }
 
+export const changeArrayToObject=(shopItems)=> {
+     
+    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
+
+    const test2 = shopItems.reduce((acc,collection)=> {
+       acc[collection.title.toLowerCase()]= collection;
+       return acc;
+    },{})
+
+    console.log(test);
+    return test;
+ }
+
 export  const convertCollectionsSnapshotToMap = collections => { 
 
     const transformedCollection = collections.docs.map(doc=>{
@@ -71,10 +84,10 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd)=>{
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account'});
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account'});
 
-export const  signInWithGoogle = ()=> auth.signInWithPopup(provider);
+export const  signInWithGoogle = ()=> auth.signInWithPopup(googleProvider);
 
 
 

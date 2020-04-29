@@ -19,7 +19,7 @@ import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector} from 'reselect';
 import { selectedShopItemsForArray ,selectedShopItemsIsLoading, selectIsCollectionLoaded }from './redux/shop/shop.selector';
 import WithSpinner from './components/with-spinner/with-spinner.component';
-import { fetchCollections ,fetchCollectionsStartAsync } from './redux/shop/shop.actions';
+import { fetchCollections ,fetchCollectionsStartAsync,fetchCollectionsStart } from './redux/shop/shop.actions';
 import CollectionPageContainer from './pages/collection/collection.container';
 
 // some demo
@@ -37,6 +37,7 @@ class App extends React.Component{
   componentDidMount(){
     const{ shopItemsArray,setCurrentUser} = this.props;
 
+    
     this.unsubscribeFromAuth = auth.onAuthStateChanged(
 
       async userAuth =>{
@@ -69,7 +70,7 @@ class App extends React.Component{
   //     this.props.initialShopItem(resultObject);
 
   //  }  );
-      this.props.fetchCollections();
+      this.props.fetchCollectionsStart();
   //this.props.fetchCollectionsStartAsync();
 
   }
@@ -133,6 +134,6 @@ const mapStateToProps = createStructuredSelector({
 })
 
 
-const mapActionToProps = {setCurrentUser ,fetchCollections ,fetchCollectionsStartAsync }
+const mapActionToProps = {setCurrentUser ,fetchCollectionsStart,fetchCollections ,fetchCollectionsStartAsync }
 
 export default connect(mapStateToProps, mapActionToProps) (App);
