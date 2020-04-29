@@ -29,3 +29,20 @@ export const emailSignInFailure = errorMessage =>({
     payload:errorMessage
 })
 
+export const signOut = ()=>({
+    type:UserActionTypes.SIGN_OUT,
+    payload:null
+})
+
+export const signUpStart = (user)=>({
+    type:UserActionTypes.SIGN_UP_START,
+    payload:user
+})
+export const signUpSuccess = (user)=>({
+    type:UserActionTypes.SIGN_UP_SUCCESS,
+    payload:user
+})
+export const signUpFailure = (errorMessage)=>({
+    type:UserActionTypes.SIGN_UP_FAILURE,
+    payload:errorMessage
+})

@@ -13,12 +13,12 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import  firebase,{ auth, createUserProfileDocument ,addCollectionAndDocuments,convertCollectionsSnapshotToMap } from './firebase/firebase.util';
 
 //Redux
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector} from 'reselect';
 import { selectedShopItemsForArray ,selectedShopItemsIsLoading, selectIsCollectionLoaded }from './redux/shop/shop.selector';
-import WithSpinner from './components/with-spinner/with-spinner.component';
+import  WithSpinner from './components/with-spinner/with-spinner.component';
 import { fetchCollections ,fetchCollectionsStartAsync,fetchCollectionsStart } from './redux/shop/shop.actions';
 import CollectionPageContainer from './pages/collection/collection.container';
 
@@ -38,26 +38,26 @@ class App extends React.Component{
     const{ shopItemsArray,setCurrentUser} = this.props;
 
     
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(
 
-      async userAuth =>{
-        if(userAuth){
-          const userRef = await createUserProfileDocument(userAuth);     
-           userRef.onSnapshot(snapShot => {
-            setCurrentUser({
-              id:snapShot.id,
-              ...snapShot.data()
-            });
-          })
-        }else{
-          setCurrentUser(userAuth);
-        //  addCollectionAndDocuments('collections',shopItemsArray.map(({title,items})=>({title,items})));
-        }
-      },
-      error =>{
-        console.log(error);
-      }
-    );
+    //   async userAuth =>{
+    //     if(userAuth){
+    //       const userRef = await createUserProfileDocument(userAuth);     
+    //        userRef.onSnapshot(snapShot => {
+    //         setCurrentUser({
+    //           id:snapShot.id,
+    //           ...snapShot.data()
+    //         });
+    //       })
+    //     }else{
+    //       setCurrentUser(userAuth);
+    //     //  addCollectionAndDocuments('collections',shopItemsArray.map(({title,items})=>({title,items})));
+    //     }
+    //   },
+    //   error =>{
+    //     console.log(error);
+    //   }
+    // );
     
   //   const collcectionRef = firebase.firestore().collection('collections');
 
@@ -77,12 +77,12 @@ class App extends React.Component{
 
   handleSignOut =()=> {
 
-      auth.signOut()
-      .then(()=>{
-        this.props.setCurrentUser(null);
-        console.log('success log out');
-      })
-      .catch(e=>console.error(e));
+      // auth.signOut()
+      // .then(()=>{
+      //   this.props.setCurrentUser(null);
+      //   console.log('success log out');
+      // })
+      // .catch(e=>console.error(e));
 
   }
 
