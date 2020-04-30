@@ -14,7 +14,7 @@ import  firebase,{ auth, createUserProfileDocument ,addCollectionAndDocuments,co
 
 //Redux
 import { connect } from 'react-redux';
-import { setCurrentUser } from './redux/user/user.action';
+import { setCurrentUser, checkUserSession } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector} from 'reselect';
 import { selectedShopItemsForArray ,selectedShopItemsIsLoading, selectIsCollectionLoaded }from './redux/shop/shop.selector';
@@ -35,7 +35,7 @@ class App extends React.Component{
 
 
   componentDidMount(){
-    const{ shopItemsArray,setCurrentUser} = this.props;
+    const{ shopItemsArray,checkUserSession} = this.props;
 
     
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(
@@ -71,6 +71,7 @@ class App extends React.Component{
 
   //  }  );
       this.props.fetchCollectionsStart();
+      checkUserSession();
   //this.props.fetchCollectionsStartAsync();
 
   }
@@ -134,6 +135,6 @@ const mapStateToProps = createStructuredSelector({
 })
 
 
-const mapActionToProps = {setCurrentUser ,fetchCollectionsStart,fetchCollections ,fetchCollectionsStartAsync }
+const mapActionToProps = {setCurrentUser ,checkUserSession,fetchCollectionsStart,fetchCollections ,fetchCollectionsStartAsync }
 
 export default connect(mapStateToProps, mapActionToProps) (App);

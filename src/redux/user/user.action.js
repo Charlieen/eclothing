@@ -8,30 +8,35 @@ export const setCurrentUser = user =>({
 export const googleSignInStart = ()=>({
     type:UserActionTypes.GOOGLE_SIGN_IN_START
 });
-export const googleSignInSuccess = user => ({
-    type:UserActionTypes.GOOGLE_SIGN_IN_SUCCESS,
-    payload:user
-}) 
-export const googleSignInFailure = errorMessage =>({
-    type:UserActionTypes.GOOGLE_SIGN_IN_FAILURE,
-    payload:errorMessage
-})
+
 export const emailSignInStart = (emailAndPassword)=>({
     type:UserActionTypes.EMAIL_SIGN_IN_START,
     payload:emailAndPassword
 });
-export const emailSignInSuccess = user => ({
-    type:UserActionTypes.EMAIL_SIGN_IN_SUCCESS,
+
+
+export const signInSuccess = user => ({
+    type:UserActionTypes.SIGN_IN_SUCCESS,
     payload:user
 }) 
-export const emailSignInFailure = errorMessage =>({
-    type:UserActionTypes.EMAIL_SIGN_IN_FAILURE,
+export const signInFailure = errorMessage =>({
+    type:UserActionTypes.SIGN_IN_FAILURE,
     payload:errorMessage
 })
 
-export const signOut = ()=>({
-    type:UserActionTypes.SIGN_OUT,
-    payload:null
+
+
+export const signOutStart = ()=>({
+    type:UserActionTypes.SIGN_OUT_START
+  
+})
+export const signOutSuccess = ()=>({
+    type:UserActionTypes.SIGN_OUT_SUCCESS
+   
+})
+export const signOutFailure = (error)=>({
+    type:UserActionTypes.SIGN_OUT_FAILURE,
+    payload:error
 })
 
 export const signUpStart = (user)=>({
@@ -45,4 +50,7 @@ export const signUpSuccess = (user)=>({
 export const signUpFailure = (errorMessage)=>({
     type:UserActionTypes.SIGN_UP_FAILURE,
     payload:errorMessage
+})
+export const checkUserSession = ()=>({
+    type:UserActionTypes.CHECK_USER_SESSION
 })
