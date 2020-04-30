@@ -1,4 +1,4 @@
-import React  from 'react';
+import React,{ useEffect }  from 'react';
 import CollectionPreview from '../../components/collection-preview/collection-preview';
 import { connect} from 'react-redux';
 import { Route ,Switch }from 'react-router-dom';
@@ -9,81 +9,96 @@ import CollectionOverviewContainer from '../../components/collection-overview/co
 import CollectionPage from '../collection/collection.component';
 
 import {fetchCollectionsStart }from '../../redux/shop/shop.actions';
-import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
-//          
- class ShopPage extends React.Component{
 
-   //state={loading:true}
+const ShopPage =({match,fetchCollectionsStart }) => {
+
+   useEffect(() => {
+
+      fetchCollectionsStart();
+
+   }, [fetchCollectionsStart]);
+
+      return ( <div className="shop-page">
+      <Route exact path={`${match.path}`} 
+      component={CollectionOverviewContainer}/> 
+      </div>
+   )
+   ;
+}
+// //          
+//  class ShopPage extends React.Component{
+
+//    //state={loading:true}
      
-   // unsubscribeCollectionSnapshot=null;
+//    // unsubscribeCollectionSnapshot=null;
 
-   // changeArrayToObject=(shopItems)=> {
+//    // changeArrayToObject=(shopItems)=> {
      
-   //    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
+//    //    const test= shopItems.reduce((result,item) => ({...result,[`${item.routeName}`]:item }),{});
 
-   //    const test2 = shopItems.reduce((acc,collection)=> {
-   //       acc[collection.title.toLowerCase()]= collection;
-   //       return acc;
-   //    },{})
+//    //    const test2 = shopItems.reduce((acc,collection)=> {
+//    //       acc[collection.title.toLowerCase()]= collection;
+//    //       return acc;
+//    //    },{})
 
-   //    console.log(test);
-   //    return test;
-   // }
+//    //    console.log(test);
+//    //    return test;
+//    // }
 
-   componentDidMount(){
+//    componentDidMount(){
 
-      this.props.fetchCollectionsStart();
+//       this.props.fetchCollectionsStart();
 
-      // const collcectionRef = firebase.firestore().collection('collections');
-      // // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
+//       // const collcectionRef = firebase.firestore().collection('collections');
+//       // // https://firestore.googleapis.com/v1/projects/eclothing-9c86a/databases/(default)/documents/cities/LA
 
-      // //: 1 firebase api onSnapshot:
-      //  this.unsubscribeCollectionSnapshot =collcectionRef.onSnapshot(async snapshot => {
-      //  // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
-      //  const result = convertCollectionsSnapshotToMap(snapshot);
-      //     console.log(result);
-      //     const resultObject = this.changeArrayToObject(result);
+//       // //: 1 firebase api onSnapshot:
+//       //  this.unsubscribeCollectionSnapshot =collcectionRef.onSnapshot(async snapshot => {
+//       //  // const result = await snapshot.docs.map(doc=> ({...doc.data(),id:doc.id}));
+//       //  const result = convertCollectionsSnapshotToMap(snapshot);
+//       //     console.log(result);
+//       //     const resultObject = this.changeArrayToObject(result);
 
-      //   this.props.initialShopItem(resultObject);
-      //   this.setState({loading:false});
-      // });
+//       //   this.props.initialShopItem(resultObject);
+//       //   this.setState({loading:false});
+//       // });
 
-      //: 2 firebase api promise version:
+//       //: 2 firebase api promise version:
 
-      // collcectionRef.get().then(snapshot=>{
+//       // collcectionRef.get().then(snapshot=>{
 
-      // })
-      //: 3 RESTful api  by fetch
+//       // })
+//       //: 3 RESTful api  by fetch
 
      
 
 
-   }
-   // componentWillUnmount(){
-   //  //  this.unsubscribeCollectionSnapshot();
-   // }
+//    }
+//    // componentWillUnmount(){
+//    //  //  this.unsubscribeCollectionSnapshot();
+//    // }
 
   
    
-    render() {
+//     render() {
 
-      const {match} = this.props;
-      // const { isLoading } = this.props.shop;
+//       const {match} = this.props;
+//       // const { isLoading } = this.props.shop;
 
-      // const WithSpinnerCollecitonOverview = WithSpinner(CollectionOverview);
+//       // const WithSpinnerCollecitonOverview = WithSpinner(CollectionOverview);
 
-      // <Route exact path={`${match.path}`} 
-      // render={(props)=> <WithSpinnerCollecitonOverview isLoading={isLoading} {...props}/> }/> 
+//       // <Route exact path={`${match.path}`} 
+//       // render={(props)=> <WithSpinnerCollecitonOverview isLoading={isLoading} {...props}/> }/> 
 
-      return ( <div className="shop-page">
-               <Route exact path={`${match.path}`} 
-               component={CollectionOverviewContainer}/> 
-               </div>
-            )
-    }
+//       return ( <div className="shop-page">
+//                <Route exact path={`${match.path}`} 
+//                component={CollectionOverviewContainer}/> 
+//                </div>
+//             )
+//     }
 
- }
+//  }
     
 
 
