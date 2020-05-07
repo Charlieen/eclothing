@@ -31,12 +31,13 @@ if(process.env.NODE_ENV === 'production'){
         console.log('Server running on port ' + port);
     });
 
-    app.post('/payment', {req,res} => {
+    app.post('/payment', (req,res) => {
+
         const body = {
             source: req.body.token.id,
             amount: req.body.amount,
             currency: 'usd'
-        };
+        }
 
         stripe.charges.create(body, (stripeErr,stripeRes)=>{
             if(stripeErr){
@@ -44,9 +45,9 @@ if(process.env.NODE_ENV === 'production'){
             }else {
                 res.status(200).send({ success: stripeRes});
             }
-        } );
+        } )
         
-    })
+    }  )
 
 
 
