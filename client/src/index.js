@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -15,7 +15,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
       <PersistGate persistor={persistor}>
+      <Suspense fallback={<div>...Loading</div>}>
       <App/>
+      </Suspense>
+     
       </PersistGate>
      
       </BrowserRouter>

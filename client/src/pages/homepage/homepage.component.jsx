@@ -3,10 +3,14 @@ import Directory from '../../components/directory/directory.component';
 import { HomePageContainer} from './homepage.styles';
 
 
-export const HomePage =()=> (
-    <HomePageContainer>
-    <Directory/>
-    </HomePageContainer>
-)
+export const HomePage =()=>{
+
+   // throw Error;
+    return (
+        <HomePageContainer>
+        <Directory/>
+        </HomePageContainer>
+    );
+} 
 
 export default HomePage;

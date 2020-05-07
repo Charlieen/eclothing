@@ -27,7 +27,7 @@ export const removeItem = (cartItems,item) => {
 }
 
 export const _addItem_groupWay = (item,state) =>{
-    debugger;
+   // debugger;
     const itemExist = state.cartItems.find(i =>i.id === item.id);
 
     let itemUpdate = itemExist ? {...itemExist, count: itemExist.count +1}:{...item,count:1};

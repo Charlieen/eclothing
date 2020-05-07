@@ -60,7 +60,7 @@ export function* signOut(){
 
 export function* signUp(user){
     
-    debugger;
+   // debugger;
     console.log(user);
     const{email,password} = user.payload;
     try {
